@@ -1,4 +1,4 @@
-import os
+from .fact_review import route_fact_check
 import time
 import datetime
 from langgraph.graph import StateGraph, END
@@ -99,7 +99,7 @@ class ChiefEditorAgent:
         # Fact-checker loop — bounded via task.max_fact_check_revisions
         workflow.add_conditional_edges(
             'fact_checker',
-            self._route_fact_check,
+            route_fact_check,
             {"accept": "visualizer", "revise": "writer"}
         )
 
@@ -144,3 +144,4 @@ class ChiefEditorAgent:
 
         result = await chain.ainvoke({"task": self.task}, config=config)
         return result
+
